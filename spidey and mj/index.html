@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Hearts, One City - Spider-Man, MJ, Ibay & Aca</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: #1a0a0f;
+            color: #fff;
+        }
+
+        /* ---------------------------------- */
+        /* Hero Split Screen (Awal) */
+        /* ---------------------------------- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-side {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-side:hover {
+            flex: 1.1;
+        }
+
+        .hero-left {
+            background: linear-gradient(rgba(26, 10, 15, 0.6), rgba(26, 10, 15, 0.8)), url('spider-man-rooftop.jpg');
+        }
+
+        .hero-right {
+            background: linear-gradient(rgba(26, 10, 15, 0.6), rgba(26, 10, 15, 0.8)), url('mj-theater.jpg');
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            padding: 40px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
+            letter-spacing: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        .hero-btn {
+            padding: 18px 45px;
+            font-size: 1.1rem;
+            border: 2px solid;
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-btn-spidey {
+            border-color: #8B2635;
+        }
+
+        .hero-btn-mj {
+            border-color: #D4AF37;
+        }
+        
+        /* ---------------------------------- */
+        /* POV Sections Umum */
+        /* ---------------------------------- */
+        .pov-section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pov-section.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .pov-spidey {
+            background: linear-gradient(rgba(26, 10, 15, 0.85), rgba(26, 10, 15, 0.85)), url('city-rooftop-night.jpg');
+        }
+
+        .pov-mj {
+            background: linear-gradient(rgba(26, 10, 15, 0.85), rgba(26, 10, 15, 0.85)), url('theater-backstage.jpg');
+        }
+
+        /* ---------------------------------- */
+        /* POV IBAY - Custom Style */
+        /* ---------------------------------- */
+        .pov-ibay {
+            background: linear-gradient(rgba(255, 79, 154, 0.5), rgba(26, 10, 15, 0.85)), url('strawberry.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .pov-ibay .pov-header {
+            color: #FF4F9A; /* Warna dominan */
+        }
+
+        .pov-ibay .quote-box {
+            background: rgba(255, 79, 154, 0.2);
+            border-left: 4px solid #FF4F9A;
+        }
+
+        .pov-ibay .transition-btn {
+            background: linear-gradient(135deg, #FF4F9A, #A63363);
+            box-shadow: 0 10px 30px rgba(255, 79, 154, 0.4);
+        }
+
+        .pov-ibay .transition-btn:hover {
+            box-shadow: 0 15px 40px rgba(255, 79, 154, 0.6);
+        }
+
+        /* ---------------------------------- */
+        /* Final Together Section - Perubahan Warna */
+        /* ---------------------------------- */
+        .final-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(rgba(26, 10, 15, 0.9), rgba(26, 10, 15, 0.9)), url('peter-mj-together.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s ease;
+        }
+
+        .final-section.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .final-title {
+            color: #FF4F9A; /* Diubah ke warna dominan Ibay */
+        }
+
+        .cta-btn-aca {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            background: rgba(255, 79, 154, 0.2);
+            border: 2px solid #FF4F9A; /* Diubah ke warna dominan Ibay */
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-btn-aca:hover {
+            background: rgba(255, 79, 154, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 79, 154, 0.4);
+        }
+        
+        /* ---------------------------------- */
+        /* Final Aca Section - Interactive */
+        /* ---------------------------------- */
+        .final-aca {
+            min-height: 100vh;
+            background-color: #FFB6C1; /* Pink Kosong */
+            color: #1a0a0f;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .final-aca::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,182,193,0) 70%);
+            animation: starburst 10s infinite;
+        }
+
+        @keyframes starburst {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .aca-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .aca-particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #FFD700; /* Bintang Kuning */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: particleFall 6s ease-in-out infinite;
+        }
+        
+        @keyframes particleFall {
+            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(100vh) scale(1); opacity: 0; }
+        }
+
+        .aca-textarea {
+            width: 90%;
+            max-width: 600px;
+            height: 250px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #FF4F9A;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            color: #1a0a0f;
+            background-color: rgba(255, 255, 255, 0.8);
+            resize: none;
+            /* FIX: Menambahkan z-index agar bisa diketik/diklik */
+            position: relative; 
+            z-index: 5;
+        }
+
+        .aca-submit-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            background-color: #FF4F9A;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+            /* FIX: Menambahkan z-index agar bisa diklik */
+            position: relative; 
+            z-index: 5;
+        }
+
+        .aca-submit-btn:hover {
+            background-color: #A63363;
+        }
+
+        .aca-message {
+            color: #FF0000;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        /* FIX: Menambahkan z-index untuk tombol putar ulang agar bisa diklik */
+        .final-aca .cta-btn {
+            position: relative;
+            z-index: 5;
+        }
+
+
+        /* Sisa Style yang Anda berikan (untuk POV dan komponen umum lainnya) */
+
+        /* Icon decorations */
+        .icon-spider, .icon-spotlight {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.2;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .icon-spider {
+            top: 10%;
+            left: 10%;
+        }
+
+        .icon-spotlight {
+            bottom: 10%;
+            right: 10%;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pov-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pov-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #D4AF37;
+        }
+
+        .pov-text {
+            font-size: 1.3rem;
+            line-height: 2;
+            margin-bottom: 60px;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+        }
+
+        /* Moment Gallery */
+        .moments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .moment-card {
+            position: relative;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .moment-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .moment-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+
+        .moment-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 2;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: rgba(139, 38, 53, 0.2);
+            border-left: 4px solid #D4AF37;
+            padding: 40px;
+            margin: 60px auto;
+            max-width: 900px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            line-height: 1.8;
+            font-style: italic;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .transition-btn {
+            display: block;
+            margin: 60px auto;
+            padding: 20px 50px;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #8B2635, #D4AF37);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(139, 38, 53, 0.4);
+        }
+
+        .transition-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
+        }
+        
+        .final-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 40px;
+        }
+
+        .final-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 40px;
+            color: #D4AF37;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        .final-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 60px;
+            animation: fadeInUp 2s ease;
+        }
+
+        .final-cta {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 2.5s ease;
+        }
+
+        .cta-btn {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid #D4AF37;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-btn:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Audio Control */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: rgba(212, 175, 55, 0.3);
+            border: 2px solid #D4AF37;
+            padding: 15px 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(212, 175, 55, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Hide sections initially */
+        .pov-section, .final-section, .final-aca {
+            display: none;
+        }
+
+        .pov-section.active, .final-section.active, .final-aca.active {
+            display: flex;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero" id="hero">
+        <div class="hero-side hero-left">
+            <div class="icon-spider">🕷</div>
+            <div class="particles" id="particles-left"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Two Hearts,<br>One City</h1>
+                <p class="hero-subtitle">A Love Story</p>
+                <button class="hero-btn hero-btn-spidey" onclick="showPOV('spidey')">
+                    🔴 Lihat dari sisi Spider-Man
+                </button>
+            </div>
+        </div>
+        <div class="hero-side hero-right">
+            <div class="icon-spotlight">✨</div>
+            <div class="particles" id="particles-right"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Two Hearts,<br>One City</h1>
+                <p class="hero-subtitle">A Love Story</p>
+                <button class="hero-btn hero-btn-mj" onclick="showPOV('mj')">
+                    🟠 Lihat dari sisi MJ
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="pov-section pov-spidey" id="pov-spidey">
+        <div class="pov-container">
+            <h2 class="pov-header">🕷 Dari Sudut Pandang Spider-Man</h2>
+            
+            <p class="pov-text">
+                Setiap malam aku berayun di antara gedung-gedung ini, menyelamatkan kota dari bahaya yang tak pernah berhenti datang. Tapi di tengah semua kekacauan itu, ada satu hal yang selalu membuat aku pulang, dia.
+            </p>
+
+            <p class="pov-text">
+                MJ tahu siapa aku. Dia tahu risiko yang datang dengan mencintai seseorang yang hidup di dua dunia. Namun dia tidak pernah memintaku untuk memilih. Dia memahami bahwa aku butuh keduanya: kota ini dan dia.
+            </p>
+
+            <div class="moments-grid">
+                <div class="moment-card" style="background-image: url('spidey-mj-hands.jpg');">
+                    <p class="moment-caption">"Tanganmu selalu hangat, bahkan ketika sarung tanganku basah hujan."</p>
+                </div>
+                <div class="moment-card" style="background-image: url('spidey-mj-hug.jpg');">
+                    <p class="moment-caption">"Pelukanmu adalah rumah teraman yang pernah aku kenal."</p>
+                </div>
+                <div class="moment-card" style="background-image: url('rooftop-dinner.jpg');">
+                    <p class="moment-caption">"semuanya terekam di kepala dan juga hatiku."</p>
+                </div>
+            </div>
+
+            <p class="pov-text">
+                Aku tidak bisa berjanji padanya malam yang tenang atau masa depan tanpa luka. Yang bisa aku berikan hanyalah jaminan bahwa aku akan selalu kembali. Untuk kota ini. Untuknya. Karena tanpa dia, semua ini tidak ada artinya.
+            </p>
+
+            <div class="quote-box">
+                "Dengan atau tanpa topeng, hatiku selalu tahu jalan pulang — padamu."
+            </div>
+
+            <button class="transition-btn" id="spidey-transition-btn" onclick="showPOV('mj')">
+                → Lihat bagaimana MJ memandang kita
+            </button>
+        </div>
+    </section>
+
+    <section class="pov-section pov-mj" id="pov-mj">
+        <div class="pov-container">
+            <h2 class="pov-header">✨ Dari Sudut Pandang MJ</h2>
+            
+            <p class="pov-text">
+                Orang-orang sering bertanya bagaimana aku bisa mencintai seseorang yang hidupnya penuh bahaya. Jawabannya sederhana: karena aku tidak mencintai Spider-Man saja. Aku mencintai Peter Parker, pria yang memilih untuk peduli bahkan ketika dunia tidak peduli padanya.
+            </p>
+
+            <p class="pov-text">
+                Setiap kali dia pergi, aku tahu ada kemungkinan dia tidak kembali. Tapi aku juga tahu dia akan berusaha sekuat tenaga untuk pulang padaku. Dan sampai detik ini, dia selalu menepatinya.
+            </p>
+
+            <div class="moments-grid">
+                <div class="moment-card" style="background-image: url('mj-peter-injured.jpg');">
+                    <p class="moment-caption">"Aku tidak pernah marah saat kau pulang terluka. Aku hanya bersyukur kau pulang."</p>
+                </div>
+                <div class="moment-card" style="background-image: url('mj-waiting-cafe.jpg');">
+                    <p class="moment-caption">"aku mencintai petter parker, bukan hanya spiderman."</p>
+                </div>
+                <div class="moment-card" style="background-image: url('mj-balcony-smile.jpg');">
+                    <p class="moment-caption">"Dari balkon ini, aku selalu mencarimu di langit malam."</p>
+                </div>
+            </div>
+
+            <p class="pov-text">
+                Aku tidak naif. Aku tahu cinta kami tidak sempurna, tidak mudah. Tapi aku memilih ini. Aku memilih dia. Karena cinta sejati bukan tentang menemukan seseorang yang sempurna, tapi tentang memilih untuk tetap bersama di tengah semua ketidaksempurnaan.
+            </p>
+
+            <div class="quote-box">
+                "Aku tahu hidupmu bukan mudah. Tapi aku tidak pernah menyerah pada seseorang yang selalu kembali padaku."
+            </div>
+
+            <button class="transition-btn" id="mj-transition-btn" onclick="showPOV('ibay')">
+                → Lihat dari sisi Ibay
+            </button>
+        </div>
+    </section>
+    
+    <section class="pov-section pov-ibay" id="pov-ibay">
+        <div class="pov-container">
+            <h2 class="pov-header">🍓 Dari Sudut Pandang Ibay</h2>
+            
+            <p class="pov-text">
+                'Dari sudut pandang Ibay'
+                <br>
+                potongan monolog di slide opening itu aku ambil dari cerita spiderman favoritku, spiderman andrew garfield. dinamika cerita dia dan gwen stacy yang sangat tersusun dengan baik, meskipun pada akhirnya dia harus merelakan cintanya untuk pergi. ujung cerita yang sangat menyakitkan, dimana petter berhasil menyelamatkan seluruh dunia, tetapi gagal saat menyelamatkan satu wanita yang dia anggap sebagai dunia nya. 
+            </p>
+
+            <p class="pov-text">
+                aku menyukai cerita spiderman tadi, tapi pengecualian untuk ending yang di dapat. dalam kisah kita, ending yang aku harap kita dapatkan adalah ending dari 'pride and prejudice', kisah cinta darcy dan elizabeth.
+            </p>
+
+            <div class="moments-grid">
+                <div class="moment-card" style="background-image: url('aca1.jpg');">
+                    <p class="moment-caption">"tomatnya aja salting karena di pegang si cantik."</p>
+                </div>
+                <div class="moment-card" style="background-image: url('aca2.jpg');">
+                    <p class="moment-caption">"halloween identik dengan kematian dan hal seram. tapi saat kamu ikut merayakan, itu berubah menjadi hal cantik."</p>
+                </div>
+                <div class="moment-card" style="background-image: url('aca3.jpg');">
+                    <p class="moment-caption">"kalo kamu senyum sampe mata ilang gini, semua capekku juga ikut ilang sayang."</p>
+                </div>
+            </div>
+
+            <p class="pov-text">
+                Pada akhirnya dari semua narasi panjang yang aku tulis ini, hal yang ingin aku sampaikan adalah aku mencintaimu, dulu, kemarin, sekarang dan juga nanti💖
+            </p>
+
+            <div class="quote-box">
+                "sayang, aku cuman mau minta maaf karena masih banyak kurangnya. jangan ilang yaa sabarnya, I love you💖💖💖"
+            </div>
+
+            <button class="transition-btn" id="ibay-transition-btn" onclick="showFinal('ibay')">
+                → Lihat mereka bersama
+            </button>
+        </div>
+    </section>
+
+    <section class="final-section" id="final-section">
+        <div class="final-content">
+            <h2 class="final-title">Together</h2>
+            <p class="final-quote">
+                "Kita bukan sempurna.<br>
+                Tapi kita tidak pernah berhenti<br>
+                memilih satu sama lain."
+            </p>
+            <div class="final-cta">
+                <button class="cta-btn cta-btn-aca" id="final-btn-ibay-aca" onclick="showFinalAca()">
+                    Bagaimana Ibay memandang Aca
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="final-aca" id="final-aca">
+        <div class="aca-particles" id="aca-particles"></div>
+        <h2 class="final-title" style="color:#FF4F9A;">Lalu, bagaimana Aca memandang Ibay?</h2>
+        <p class="pov-text" style="color:#1a0a0f;">Tuliskan yang ada di hatimu, acaaa. sebelnya, sayangnya dan cintanya..</p>
+        
+        <textarea id="aca-input" class="aca-textarea" placeholder="Ketik di sini..."></textarea>
+        
+        <p id="aca-message" class="aca-message" style="display:none;">Tidak terkirim, coba kirim langsung ke ibay yang ganteng itu.</p>
+        
+        <button class="aca-submit-btn" onclick="submitAcaView()">
+            Kirim!
+        </button>
+        
+        <button class="cta-btn" onclick="resetJourney()">
+            🔄 Putar ulang dari awal
+        </button>
+    </section>
+
+    <div class="audio-control" id="audioControl" onclick="toggleAudio()">
+        🔊 Musik
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Generate floating particles (untuk hero section)
+        function createParticles(containerId) {
+            const container = document.getElementById(containerId);
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles('particles-left');
+        createParticles('particles-right');
+        
+        // Generate Aca particles (untuk final aca section)
+        function createAcaParticles() {
+            const container = document.getElementById('aca-particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'aca-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createAcaParticles();
+
+        // Track which POV has been viewed, ditambahkan 'ibay'
+        let viewedPOVs = {
+            spidey: false,
+            mj: false,
+            ibay: false
+        };
+
+        // POV Navigation
+        function showPOV(pov) {
+            const sections = ['hero', 'pov-spidey', 'pov-mj', 'pov-ibay', 'final-section', 'final-aca'];
+            
+            // Hide all sections first
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                    element.classList.remove('active');
+                }
+            });
+            
+            // Mark this POV as viewed
+            if (pov !== 'hero') {
+                viewedPOVs[pov] = true;
+            }
+
+            // Show selected POV
+            const currentPOV = document.getElementById('pov-' + pov);
+            if (currentPOV) {
+                currentPOV.style.display = 'flex';
+                setTimeout(() => {
+                    currentPOV.classList.add('active');
+                    observeMoments();
+                    updateTransitionButtons(); // Update buttons setelah melihat POV
+                }, 100);
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // Update transition buttons based on viewed POVs
+        function updateTransitionButtons() {
+            const spideyButton = document.getElementById('spidey-transition-btn');
+            const mjButton = document.getElementById('mj-transition-btn');
+            const ibayButton = document.getElementById('ibay-transition-btn');
+            
+            // Aturan transisi
+            if (viewedPOVs.spidey && viewedPOVs.mj && viewedPOVs.ibay) {
+                spideyButton.innerHTML = '→ Lihat mereka bersama';
+                spideyButton.onclick = function() { showFinal('spidey'); };
+                mjButton.innerHTML = '→ Lihat mereka bersama';
+                mjButton.onclick = function() { showFinal('mj'); };
+                ibayButton.innerHTML = '→ Lanjut ke Aca';
+                ibayButton.onclick = showFinalAca;
+            } else if (viewedPOVs.spidey && !viewedPOVs.mj) {
+                spideyButton.innerHTML = '→ Lihat bagaimana MJ memandang kita';
+                spideyButton.onclick = function() { showPOV('mj'); };
+            } else if (viewedPOVs.mj && !viewedPOVs.ibay) {
+                mjButton.innerHTML = '→ Lihat dari sisi Ibay';
+                mjButton.onclick = function() { showPOV('ibay'); };
+            } else if (viewedPOVs.ibay && !viewedPOVs.spidey) {
+                ibayButton.innerHTML = '→ Lihat bagaimana Spider-Man memandang kita';
+                ibayButton.onclick = function() { showPOV('spidey'); };
+            }
+            
+            // Mengubah tombol di Final Together
+            const finalBtn = document.getElementById('final-btn-ibay-aca');
+            if (viewedPOVs.spidey && viewedPOVs.mj) {
+                finalBtn.innerHTML = 'Bagaimana Ibay memandang Aca';
+                finalBtn.onclick = showFinalAca;
+            }
+        }
+
+        // Show Final Section (Together)
+        function showFinal(fromPov) {
+            const sections = ['pov-spidey', 'pov-mj', 'pov-ibay', 'final-aca'];
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+            
+            const finalSection = document.getElementById('final-section');
+            finalSection.style.display = 'flex';
+            setTimeout(() => {
+                finalSection.classList.add('active');
+                
+                // Ganti tombol di Final Section
+                const finalBtn = document.getElementById('final-btn-ibay-aca');
+                finalBtn.innerHTML = 'Bagaimana Ibay memandang Aca';
+                finalBtn.onclick = showFinalAca;
+
+            }, 100);
+
+            window.scrollTo(0, 0);
+        }
+        
+        // Show Final Aca Interactive Section
+        function showFinalAca() {
+            const sections = ['hero', 'pov-spidey', 'pov-mj', 'pov-ibay', 'final-section'];
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.display = 'none';
+                }
+            });
+
+            const finalAca = document.getElementById('final-aca');
+            finalAca.style.display = 'flex';
+            setTimeout(() => {
+                finalAca.classList.add('active');
+            }, 100);
+            
+            // Reset message
+            document.getElementById('aca-message').style.display = 'none';
+            document.getElementById('aca-input').value = '';
+
+            window.scrollTo(0, 0);
+        }
+        
+        // Submit Aca View (Interaktif)
+        function submitAcaView() {
+            const messageElement = document.getElementById('aca-message');
+            messageElement.style.display = 'block';
+        }
+
+        // Reset Journey
+        function resetJourney() {
+            const hero = document.getElementById('hero');
+            const sections = ['pov-spidey', 'pov-mj', 'pov-ibay', 'final-section', 'final-aca'];
+            
+            // Reset viewed POVs tracker
+            viewedPOVs.spidey = false;
+            viewedPOVs.mj = false;
+            viewedPOVs.ibay = false;
+            
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.classList.remove('active');
+                }
+            });
+
+            setTimeout(() => {
+                sections.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.style.display = 'none';
+                    }
+                });
+                hero.style.display = 'flex';
+            }, 500);
+            
+            updateTransitionButtons(); // Reset tombol
+
+            window.scrollTo(0, 0);
+        }
+
+        // Observe moment cards for animation
+        function observeMoments() {
+            const momentCards = document.querySelectorAll('.moment-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            momentCards.forEach(card => {
+                card.classList.remove('visible');
+                observer.observe(card);
+            });
+        }
+
+        // Audio Control
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const audioControl = document.getElementById('audioControl');
+
+        function toggleAudio() {
+            if (isPlaying) {
+                bgMusic.pause();
+                audioControl.textContent = '🔇 Musik';
+            } else {
+                // Mencoba memutar, bisa gagal karena auto-play policy
+                bgMusic.play().catch(error => {
+                    console.log("Autoplay failed, user must interact first.");
+                });
+                audioControl.textContent = '🔊 Musik';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Jalankan updateTransitionButtons saat load pertama untuk memastikan tombol awal sudah benar
+        document.addEventListener('DOMContentLoaded', updateTransitionButtons);
+    </script>
+</body>
+</html>
